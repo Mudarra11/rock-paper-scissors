@@ -5,6 +5,16 @@
         <title>Rock Paper Scissors</title>
     </head>
     <body>
+        <h1>Choose Rock, Paper or Scissors.</h1>
+        <div class="buttons">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+        </div>  
+        <div>
+            <p id="results"></p>
+            <p id="score"></p>
+        </div>  
         <script>
             function getComputerChoice() {
                let randomChoice = Math.floor(Math.random() * 3);
@@ -18,6 +28,7 @@
                 return "scissors"
                }
             }
+            
             let playerScore = 0;
             let computerScore = 0;
 
@@ -38,31 +49,53 @@
                         return `You Lose! ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} beats ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}`;  
                     }                     
                 }   
-
             
-            const computerSelection = getComputerChoice();
+            
+            const para = document.querySelector('#results');
 
-            function game() {
-                for (let i = 0; playerScore < 5 && computerScore < 5; i++) {
-                        const playerSelection = prompt("Enter Rock, Paper or Scissors: ").toLowerCase();
-                        let computerSelection = getComputerChoice();
-                        console.log(playRound(playerSelection, computerSelection));
-                        console.log(playerScore, computerScore)
-                        console.log(sayResult());       
-            }
-        }
             function sayResult() {
-                if (playerScore === 5) {
-                        console.log("You Win!")
+                if (playerScore >= 5) {
+                    para.textContent = "You Win!"
                     }
-                    else if (computerScore === 5) {
-                        console.log("You Lose!")
+                    else if (computerScore >= 5) {
+                    para.textContent = "You Lose!"
                     }
                     else { 
-                        console.log("Play Again!")
+                    para.textContent = "Play Again!"
                     }
             }
-            console.log("Type 'game()' in the console to play rock paper scissors")
+
+            const rock = document.querySelector('#rock');
+            rock.addEventListener('click', function(e) {
+                playerSelection = 'rock';
+                computerSelection = getComputerChoice();
+                playRound(playerSelection, computerSelection);
+                sayResult();
+                displayScore();
+            })
+
+            const paper = document.querySelector('#paper');
+            paper.addEventListener('click', function(e) {
+                playerSelection = 'paper';
+                computerSelection = getComputerChoice();
+                playRound(playerSelection, computerSelection);
+                sayResult();
+                displayScore();
+            })
+
+            const scissors = document.querySelector('#scissors');
+            scissors.addEventListener('click', function(e) {
+                playerSelection = 'scissors'
+                computerSelection = getComputerChoice();
+                playRound(playerSelection, computerSelection)
+                sayResult();
+                displayScore();
+            });
+
+            function displayScore () {
+                const score = document.querySelector('#score');
+                if (playerScore <= 5 && computerScore <= 5) score.textContent = `Player Score:${playerScore} Computer Score:${computerScore}`;
+            }
 
         </script>
     </body>
